@@ -1,0 +1,690 @@
+{
+  "version": 2,
+  "step": "calibration",
+  "time_base": {
+    "frames_per_field": 2,
+    "pulse_separation": 1.0,
+    "camera_fps": 2.0,
+    "manual": false
+  },
+  "load": {
+    "root": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields",
+    "run": "1percent_downstream",
+    "files": {
+      "calibration": {
+        "on": true,
+        "path": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/FlowAroundCylinderNov2026.pivcalib.json"
+      },
+      "roi": {
+        "on": true,
+        "path": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/downstream.pivroi.json"
+      },
+      "mask": {
+        "on": true,
+        "path": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/downstream.pivmask.json"
+      }
+    },
+    "mode": 0,
+    "frame": 0,
+    "cmap": "auto",
+    "skip": 1,
+    "shading": "gouraud",
+    "shading_on": false,
+    "smooth_on": false,
+    "field": "Validated",
+    "roi": "Validated_ROI01",
+    "vec_scale": 1.0,
+    "smoothing": 1.0,
+    "mask": "Cylinder",
+    "quiver": true,
+    "quiver_colour": "black",
+    "units": "calibrated",
+    "background_on": true,
+    "background": "velocity norm",
+    "image": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/1percent_downstream/PIVlab_figure_uncalibrated_firstFrame.jpg"
+  },
+  "calibration": {
+    "image": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/calibration_Image.tif",
+    "segment": [
+      [
+        355.2051569927455,
+        1015.4763577713312
+      ],
+      [
+        355.1152645484741,
+        245.93870626429873
+      ]
+    ],
+    "length_mm": 80.0,
+    "rotate_deg": 0
+  },
+  "roi": {
+    "source": "frame",
+    "image": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/1percent_downstream/PIVlab_figure_uncalibrated_firstFrame.jpg",
+    "style": {
+      "smooth_on": true,
+      "smoothing": 2.5,
+      "shading_on": true,
+      "shading": "gouraud",
+      "cmap": "plasma"
+    },
+    "lists": {
+      "rect": [
+        [
+          "ROI01",
+          [
+            [
+              0.090597,
+              0.119675
+            ],
+            [
+              0.165083,
+              0.052804
+            ]
+          ],
+          true
+        ],
+        [
+          "ROI02",
+          [
+            [
+              0.141997,
+              0.076124
+            ],
+            [
+              0.169205,
+              0.050474
+            ]
+          ],
+          true
+        ],
+        [
+          "ROI03",
+          [
+            [
+              0.086168,
+              0.118621
+            ],
+            [
+              0.098474,
+              0.022478
+            ]
+          ],
+          true
+        ]
+      ],
+      "line": [
+        [
+          "LINE1",
+          [
+            [
+              0.123081,
+              0.121178
+            ],
+            [
+              0.122972,
+              0.031559
+            ]
+          ],
+          true
+        ],
+        [
+          "LINE2",
+          [
+            [
+              0.092056,
+              0.118061
+            ],
+            [
+              0.092056,
+              0.024085
+            ]
+          ],
+          true
+        ]
+      ]
+    },
+    "dirty": false
+  },
+  "mask": {
+    "source": "image",
+    "image": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/rawImages/10percent_downstream/PIVlab_0004_A.tif",
+    "tool": "circle",
+    "style": {
+      "smooth_on": false,
+      "smoothing": 1.0,
+      "shading_on": false,
+      "shading": "gouraud",
+      "cmap": "auto"
+    },
+    "masks_shown": [
+      "Cylinder"
+    ]
+  },
+  "profiles": {
+    "mode": 0,
+    "frame": 0,
+    "line": "LINE2",
+    "roi": "Validated_ROI03",
+    "quantity": "vorticity"
+  },
+  "timeseries": {
+    "quantity": "<U>",
+    "ticks": {
+      "ROI01": true,
+      "ROI02": true,
+      "ROI03": true
+    }
+  },
+  "fft_time": {
+    "roi": "Validated_ROI02",
+    "quantity": "V_std",
+    "orders": [
+      "average",
+      "fft"
+    ],
+    "function": "fft",
+    "segment": 0,
+    "npeaks": 3,
+    "remove_mean": true,
+    "detrend": true,
+    "map_style": {
+      "smooth_on": false,
+      "smoothing": 1.0,
+      "shading_on": false,
+      "shading": "gouraud",
+      "cmap": "auto"
+    },
+    "display": "frequency",
+    "fmin": 0.0001,
+    "fmax": 5.0,
+    "log_amp": false,
+    "windows": [
+      {
+        "fmin": 0.02609521974476703,
+        "fmax": 0.6999766524958063,
+        "on": true
+      }
+    ]
+  },
+  "widgets": {
+    "load": {
+      "units": [
+        "combo",
+        "calibrated"
+      ],
+      "mode": [
+        "combo",
+        "single frame"
+      ],
+      "frame": [
+        "slider",
+        0
+      ],
+      "frame_spin": [
+        "spin",
+        0
+      ],
+      "roi": [
+        "combo",
+        "ROI01  (Validated_ROI01)"
+      ],
+      "mask_combo": [
+        "combo",
+        "Cylinder  (239 vectors)"
+      ],
+      "quiver": [
+        "check",
+        true
+      ],
+      "qcolour": [
+        "combo",
+        "black"
+      ],
+      "skip": [
+        "spin",
+        1
+      ],
+      "vscale": [
+        "spin",
+        1.0
+      ],
+      "bkg_on": [
+        "check",
+        true
+      ],
+      "bkg": [
+        "combo",
+        "velocity norm"
+      ],
+      "image_combo": [
+        "combo",
+        "PIVlab_figure_uncalibrated_firstFrame.jpg   (run)"
+      ],
+      "smooth_on": [
+        "check",
+        false
+      ],
+      "smooth_label": [
+        "check",
+        false
+      ],
+      "smooth": [
+        "spin",
+        1.0
+      ],
+      "shading_on": [
+        "check",
+        false
+      ],
+      "shading": [
+        "combo",
+        "gouraud"
+      ],
+      "cmap": [
+        "combo",
+        "auto"
+      ]
+    },
+    "maps_movie": {
+      "sliders.start": [
+        "slider",
+        0
+      ],
+      "sliders.end": [
+        "slider",
+        499
+      ],
+      "sliders.fps": [
+        "slider",
+        10
+      ],
+      "spins.start": [
+        "spin",
+        0
+      ],
+      "spins.end": [
+        "spin",
+        499
+      ],
+      "spins.fps": [
+        "spin",
+        10
+      ]
+    },
+    "roi": {
+      "source": [
+        "combo",
+        "Current Frame"
+      ],
+      "image": [
+        "combo",
+        "PIVlab_figure_uncalibrated_firstFrame.jpg"
+      ]
+    },
+    "roi_style": {
+      "smooth_on": [
+        "check",
+        true
+      ],
+      "smooth": [
+        "spin",
+        2.5
+      ],
+      "shading_on": [
+        "check",
+        true
+      ],
+      "shading": [
+        "combo",
+        "gouraud"
+      ],
+      "cmap": [
+        "combo",
+        "plasma"
+      ]
+    },
+    "mask": {
+      "source": [
+        "combo",
+        "Select Image"
+      ],
+      "tool": [
+        "combo",
+        "Circle"
+      ]
+    },
+    "mask_style": {
+      "smooth_on": [
+        "check",
+        false
+      ],
+      "smooth": [
+        "spin",
+        1.0
+      ],
+      "shading_on": [
+        "check",
+        false
+      ],
+      "shading": [
+        "combo",
+        "gouraud"
+      ],
+      "cmap": [
+        "combo",
+        "auto"
+      ]
+    },
+    "profiles": {
+      "units": [
+        "combo",
+        "calibrated"
+      ],
+      "mode": [
+        "combo",
+        "single frame"
+      ],
+      "frame": [
+        "slider",
+        0
+      ],
+      "frame_spin": [
+        "spin",
+        0
+      ],
+      "line": [
+        "combo",
+        "LINE2"
+      ],
+      "roi": [
+        "combo",
+        "ROI03  (Validated_ROI03)"
+      ],
+      "mask_combo": [
+        "combo",
+        "Cylinder  (239 vectors)"
+      ],
+      "quantity": [
+        "combo",
+        "vorticity"
+      ]
+    },
+    "profiles_movie": {
+      "sliders.start": [
+        "slider",
+        0
+      ],
+      "sliders.end": [
+        "slider",
+        499
+      ],
+      "sliders.fps": [
+        "slider",
+        10
+      ],
+      "spins.start": [
+        "spin",
+        0
+      ],
+      "spins.end": [
+        "spin",
+        499
+      ],
+      "spins.fps": [
+        "spin",
+        10
+      ]
+    },
+    "timeseries": {
+      "quantity": [
+        "combo",
+        "<U>"
+      ]
+    },
+    "fft_time": {
+      "roi": [
+        "combo",
+        "ROI02  (Validated_ROI02)"
+      ],
+      "quantity": [
+        "combo",
+        "V_std"
+      ],
+      "function": [
+        "combo",
+        "FFT"
+      ],
+      "seg": [
+        "spin",
+        0
+      ],
+      "remove_mean": [
+        "check",
+        true
+      ],
+      "detrend": [
+        "check",
+        true
+      ],
+      "order_box.average": [
+        "check",
+        true
+      ],
+      "order_box.fft": [
+        "check",
+        true
+      ],
+      "display": [
+        "combo",
+        "frequency"
+      ],
+      "log_amp": [
+        "check",
+        false
+      ],
+      "fmin": [
+        "spin",
+        0.0001
+      ],
+      "fmax": [
+        "spin",
+        5.0
+      ],
+      "npeaks": [
+        "spin",
+        3
+      ]
+    },
+    "fft_map_style": {
+      "smooth_on": [
+        "check",
+        false
+      ],
+      "smooth": [
+        "spin",
+        1.0
+      ],
+      "shading_on": [
+        "check",
+        false
+      ],
+      "shading": [
+        "combo",
+        "gouraud"
+      ],
+      "cmap": [
+        "combo",
+        "auto"
+      ]
+    }
+  },
+  "executed": [
+    "calibration",
+    "roi_apply",
+    "fft_apply",
+    "fft_peaks",
+    "fft_map"
+  ],
+  "figures": [
+    [
+      "load",
+      "Run information"
+    ],
+    [
+      "calibration",
+      "Calibration image"
+    ],
+    [
+      "fft_time",
+      "FFT in time"
+    ],
+    [
+      "fft_time",
+      "FFT map"
+    ],
+    [
+      "roi",
+      "ROI selection"
+    ],
+    [
+      "mask",
+      "Mask"
+    ],
+    [
+      "maps",
+      "Maps and Quiver"
+    ],
+    [
+      "timeseries",
+      "Time series"
+    ],
+    [
+      "profiles",
+      "Profiles"
+    ]
+  ],
+  "params": {
+    "PIV_FILENAME": "PIVlab_results_uncalibrated.mat",
+    "LOG_FILENAME": "acquisition_log.txt",
+    "XSCALE": 0.0001039585254,
+    "YSCALE": 0.0001039585254,
+    "ROTATE": 0,
+    "PTS_ROI": {
+      "ROI01": [
+        [
+          0.090597,
+          0.119675
+        ],
+        [
+          0.165083,
+          0.052804
+        ]
+      ],
+      "ROI02": [
+        [
+          0.141997,
+          0.076124
+        ],
+        [
+          0.169205,
+          0.050474
+        ]
+      ],
+      "ROI03": [
+        [
+          0.086168,
+          0.118621
+        ],
+        [
+          0.098474,
+          0.022478
+        ]
+      ]
+    },
+    "LINES": {
+      "LINE1": [
+        [
+          0.123081,
+          0.121178
+        ],
+        [
+          0.122972,
+          0.031559
+        ]
+      ],
+      "LINE2": [
+        [
+          0.092056,
+          0.118061
+        ],
+        [
+          0.092056,
+          0.024085
+        ]
+      ]
+    },
+    "MASKS": {
+      "Cylinder": {
+        "colour": "#d62728",
+        "areas": [
+          {
+            "name": "Area1",
+            "kind": "circle",
+            "points_px": [
+              [
+                1154.01,
+                624.67
+              ],
+              [
+                1236.97,
+                735.14
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "MASK_APPLIED": "Cylinder",
+    "MASK_SELECTION": [
+      {
+        "kind": "circle",
+        "points_px": [
+          [
+            1154.0130496743063,
+            624.6728910438943
+          ],
+          [
+            1236.965683103378,
+            735.1410823148452
+          ]
+        ],
+        "name": "Area1",
+        "use": true
+      }
+    ],
+    "CALIB_INFO": {
+      "CALIB_IMAGE": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/calibration_Image.tif",
+      "CALIB_SEGMENT_PX": [
+        [
+          355.205,
+          1015.476
+        ],
+        [
+          355.115,
+          245.939
+        ]
+      ],
+      "CALIB_LENGTH_PX": 769.537,
+      "CALIB_LENGTH_MM": 80.0
+    },
+    "L": null,
+    "nu": null
+  },
+  "setup_files": {
+    "calibration": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/FlowAroundCylinderNov2026.pivcalib.json",
+    "roi": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/downstream.pivroi.json",
+    "mask": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/downstream.pivmask.json"
+  },
+  "loaded_run": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/1percent_downstream"
+}

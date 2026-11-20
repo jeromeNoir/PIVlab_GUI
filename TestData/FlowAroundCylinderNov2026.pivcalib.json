@@ -1,0 +1,38 @@
+{
+ "kind": "PIV_GUI calibration",
+ "version": 1,
+ "saved": "2026-11-20T18:33:51",
+ "run": "1percent_downstream",
+ "run_folder": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/1percent_downstream",
+ "image": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/calibration_Image.tif",
+ "rotate_deg": 0,
+ "segment_px": [
+  [
+   355.2051569927455,
+   1015.4763577713312
+  ],
+  [
+   355.1152645484741,
+   245.93870626429873
+  ]
+ ],
+ "length_px": 769.5376567573613,
+ "length_mm": 80.0,
+ "scale_m_per_px": 0.0001039585254,
+ "applied_m_per_px": 0.0001039585254,
+ "XSCALE": 0.0001039585254,
+ "YSCALE": 0.0001039585254,
+ "applied_with": "apply",
+ "time_base": {
+  "manual": false,
+  "frames_per_field": 2,
+  "pulse_separation_s": "0.015",
+  "camera_fps_Hz": "60",
+  "in_use": {
+   "frames_per_field": 2,
+   "pulse_separation": 1.0,
+   "camera_fps": 2.0,
+   "manual": false
+  }
+ }
+}

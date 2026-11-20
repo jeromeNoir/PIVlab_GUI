@@ -1,0 +1,4 @@
+recording_time	config_strings_selected	imageamount	cam_fps	pulse_sep	las_percent	ac_ROI_general	binning	cam_bits
+17-Nov-2026 17:31:12	PIVlab LD-PS + OPTOcam 2/80	2	60	6000	100	[1 1 1936 1216]		8
+17-Nov-2026 17:31:55	PIVlab LD-PS + OPTOcam 2/80	500	60	6000	100	[1 1 1936 1216]		8
+17-Nov-2026 17:34:23	PIVlab LD-PS + OPTOcam 2/80	500	60	6000	100	[1 1 1936 1216]		8

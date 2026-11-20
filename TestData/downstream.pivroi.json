@@ -1,0 +1,150 @@
+{
+ "kind": "PIV_GUI roi",
+ "version": 1,
+ "saved": "2026-11-20T18:11:28",
+ "run": "1percent_downstream",
+ "run_folder": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/1percent_downstream",
+ "units": "m",
+ "PTS_ROI": {
+  "ROI01": [
+   [
+    0.090597,
+    0.119675
+   ],
+   [
+    0.165083,
+    0.052804
+   ]
+  ],
+  "ROI02": [
+   [
+    0.141997,
+    0.076124
+   ],
+   [
+    0.169205,
+    0.050474
+   ]
+  ],
+  "ROI03": [
+   [
+    0.086168,
+    0.118621
+   ],
+   [
+    0.098474,
+    0.022478
+   ]
+  ]
+ },
+ "LINES": {
+  "LINE1": [
+   [
+    0.123081,
+    0.121178
+   ],
+   [
+    0.122972,
+    0.031559
+   ]
+  ],
+  "LINE2": [
+   [
+    0.092056,
+    0.118061
+   ],
+   [
+    0.092056,
+    0.024085
+   ]
+  ]
+ },
+ "lists": {
+  "rect": [
+   [
+    "ROI01",
+    [
+     [
+      0.0905971133660648,
+      0.11967464780151661
+     ],
+     [
+      0.16508307334024952,
+      0.05280401558001981
+     ]
+    ],
+    true
+   ],
+   [
+    "ROI02",
+    [
+     [
+      0.14199733924228666,
+      0.0761241047025993
+     ],
+     [
+      0.16920527229518992,
+      0.0504735455502092
+     ]
+    ],
+    true
+   ],
+   [
+    "ROI03",
+    [
+     [
+      0.0861683481943123,
+      0.1186213859602361
+     ],
+     [
+      0.09847389154028591,
+      0.022478217676178476
+     ]
+    ],
+    true
+   ]
+  ],
+  "line": [
+   [
+    "LINE1",
+    [
+     [
+      0.1230814203199859,
+      0.12117768563637878
+     ],
+     [
+      0.12297220462623437,
+      0.03155910501601752
+     ]
+    ],
+    true
+   ],
+   [
+    "LINE2",
+    [
+     [
+      0.09205566464558856,
+      0.11806059098464085
+     ],
+     [
+      0.09205566464558856,
+      0.024085078951398376
+     ]
+    ],
+    true
+   ]
+  ]
+ },
+ "applied": false,
+ "figure": {
+  "source": "frame",
+  "image": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/1percent_downstream/PIVlab_figure_uncalibrated_firstFrame.jpg",
+  "style": {
+   "smooth_on": true,
+   "smoothing": 2.5,
+   "shading_on": true,
+   "shading": "gouraud",
+   "cmap": "plasma"
+  }
+ }
+}

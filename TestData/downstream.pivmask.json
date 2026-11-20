@@ -1,0 +1,62 @@
+{
+ "kind": "PIV_GUI mask",
+ "version": 1,
+ "saved": "2026-11-20T17:16:18",
+ "run": "10percent_downstream",
+ "run_folder": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/PIV_fields/10percent_downstream",
+ "units": "px of the run's PIV grid",
+ "MASKS": {
+  "Cylinder": {
+   "colour": "#d62728",
+   "areas": [
+    {
+     "name": "Area1",
+     "kind": "circle",
+     "points_px": [
+      [
+       1154.01,
+       624.67
+      ],
+      [
+       1236.97,
+       735.14
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "MASK_APPLIED": null,
+ "MASK_SELECTION": [
+  {
+   "kind": "circle",
+   "points_px": [
+    [
+     1154.0130496743063,
+     624.6728910438943
+    ],
+    [
+     1236.965683103378,
+     735.1410823148452
+    ]
+   ],
+   "name": "Area1",
+   "use": true
+  }
+ ],
+ "masks_shown": [
+  "Cylinder"
+ ],
+ "figure": {
+  "source": "image",
+  "image": "/Users/jeromenoir/polybox/ENSEIGNEMENTS/INTRODUCTION TO FLUID DYNAMICS 2027/Experiment/FlowAroundCylinder2026/rawImages/10percent_downstream/PIVlab_0004_A.tif",
+  "tool": "circle",
+  "style": {
+   "smooth_on": false,
+   "smoothing": 1.0,
+   "shading_on": false,
+   "shading": "gouraud",
+   "cmap": "auto"
+  }
+ }
+}
