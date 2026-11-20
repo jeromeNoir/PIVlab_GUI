@@ -1,0 +1,8 @@
+PySide6>=6.5
+numpy
+scipy
+matplotlib>=3.7
+h5py
+netCDF4
+Pillow
+imageio-ffmpeg

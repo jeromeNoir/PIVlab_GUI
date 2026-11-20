@@ -1,0 +1,8 @@
+# not published on GitHub
+TODO.md
+update_github.command
+# Python caches: rebuilt automatically by Python on every machine
+__pycache__/
+*.pyc
+# macOS folder files
+.DS_Store
