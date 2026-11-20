@@ -1,6 +1,6 @@
 """View > Show all variables: the variables of the loaded run kept in memory
-by the GUI, with a short description, their format and their size (as in
-the DTS GUI). Right click on a variable: Show value.
+by the GUI, with a short description, their format and their size. Right
+click on a variable: Show value.
 
 Qt is taken from matplotlib's qt_compat, so the module works with PySide6
 and PyQt5 like PIV_GUI.py.
@@ -447,7 +447,7 @@ class VariablesDialog(QtWidgets.QDialog, _StepTree):
 
 
 # --------------------------------------------------------------------------- #
-#  File > Save variables (as Advanced > Save variables of the DTS GUI)
+#  File > Save variables 
 # --------------------------------------------------------------------------- #
 class Lazy(object):
     """A variable computed only when it is saved (e.g. the calibrated
@@ -546,7 +546,7 @@ def select_values(source, extra, paths):
 
 
 class SaveVariablesDialog(QtWidgets.QDialog, _StepTree):
-    """File > Save variables (as Advanced > Save variables of the DTS GUI):
+    """File > Save variables :
     the variables in categories, each category with a tick box selecting
     all its variables, and every variable -- and every entry of a
     dictionary variable -- with its own tick box. Save asks the file name,

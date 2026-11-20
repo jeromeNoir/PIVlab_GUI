@@ -33,7 +33,7 @@ session.pivsession.json`).
 | `PIV_GUI.py` | the Qt application: the main window, one panel class per step, the figure manager, sessions, batch, scripts |
 | `piv_gui_lib.py` | the library, **no Qt**: reading the data, the run (`PIVData`, `RunView`), all calculations, all figures (matplotlib `Figure`s) and their data for saving |
 | `gui_variables.py` | the windows View > Show all variables and File > Save variables (grouped by step, search, details) |
-| `gui_export.py` | the writer of npz / NetCDF / HDF5 / txt / csv / MATLAB -- **shared with another GUI (DTS): do not modify it** |
+| `gui_export.py` | the writer of npz / NetCDF / HDF5 / txt / csv / MATLAB -- **a generic module, kept identical to its other copies: do not modify it** |
 | `README.md` | the user documentation -- keep it up to date with every change |
 | `TODO.md` | the user's to-do list (reminders for the next work sessions): read it at the start of a session; **not published** on GitHub |
 | `update_github.command` | publishes the folder on GitHub (commit + push), see `README.md`; **not published** itself |

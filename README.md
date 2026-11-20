@@ -4,71 +4,78 @@ This python GUI was created by Jerome Noir (jnoir@ethz.ch).
 Created: 18 November 2026. Last modified: 20 November 2026.
 
 A Qt desktop application (PySide6 or PyQt5, through matplotlib's
-`qt_compat`) for
-looking at and processing one PIVlab run at a time. How it is built, and
-how to modify it or write scripts for it (also with Claude or another AI),
-is in [`Claude_for_Developer.md`](Claude_for_Developer.md).
+`qt_compat`) for looking at and processing one PIVlab run at a time. How it
+is built, and how to modify it or write scripts for it (also with Claude or
+another AI), is in [`Claude_for_Developer.md`](Claude_for_Developer.md).
+
+## Installation
+
+The GUI runs with Python 3 (3.9 or later) and these packages, listed in
+[`requirements.txt`](requirements.txt):
+
+| package | what for |
+| --- | --- |
+| `PySide6` (or `PyQt5`) | the windows (Qt); both are tested |
+| `numpy`, `scipy` | the calculations (interpolation, spectra, filters) |
+| `matplotlib` (3.7 or later) | the figures |
+| `h5py` | MATLAB v7.3 `.mat` files, Save data in HDF5 |
+| `netCDF4` | Save data in NetCDF |
+| `Pillow` | the images (calibration, backgrounds) |
+| `imageio-ffmpeg` | the MP4 movies (Make Movie); without it, or `ffmpeg` on the PATH, the movies are animated GIFs |
+
+Install them all with pip:
+
+```
+pip install -r requirements.txt
+```
+
+or with conda (in a terminal, in the folder of the GUI):
+
+```
+conda install numpy scipy matplotlib h5py netcdf4 pillow
+pip install PySide6 imageio-ffmpeg
+```
+
+## The files of the GUI
 
 | file | role |
 | --- | --- |
 | `PIV_GUI.py` | the window: menus and menu toolbar, parameter panels, figure tabs, figure list, separate windows, sessions |
-| `piv_gui_lib.py` | the library (no Qt): default parameters, folders, acquisition log, PIVlab `.mat` reader, the loaded run (`PIVData`), background image, figures and their data |
-| `gui_variables.py` | **View > Show all variables** window (adapted from the DTS GUI) |
+| `piv_gui_lib.py` | the library (no Qt): default parameters, folders, acquisition log, PIVlab `.mat` reader, the loaded run (`PIVData`), background image, calculations, figures and their data |
+| `gui_variables.py` | the windows **View > Show all variables** and **File > Save variables** |
+| `gui_export.py` | the **Save data** writer: npz, NetCDF, HDF5, txt, csv, MATLAB |
 | `Claude_for_Developer.md` | the guide for AI assistants (and developers): modifying the GUI, writing scripts for Advanced > Python script |
 | `Example_Scripts/` | example scripts for Advanced > Python script |
-| `gui_export.py` | **Save data** writer, copied unchanged from the DTS GUI (`DTS/GUI/gui_export.py`): npz, NetCDF, HDF5, txt, csv, MATLAB |
-| `requirements.txt` | the Python packages needed (`pip install -r requirements.txt`) |
-
-## Publishing on GitHub
-
-The folder is published with **`update_github.command`** (in the folder,
-not published itself, nor `TODO.md`: see `.gitignore`).
-
-The first time:
-
-1. On GitHub, create a new **public** repository (e.g. `piv_gui`) --
-   **empty**: no README, no .gitignore, no licence (they would clash with
-   the files of the folder).
-2. Double-click `update_github.command` in the Finder (the first time
-   macOS may ask to confirm: right click > Open). It asks the address of
-   the repository (e.g. `https://github.com/jeromeNoir/piv_gui.git`),
-   makes the folder a git repository linked to it, then publishes every
-   file.
-3. When git asks for a password, give a **personal access token** (GitHub
-   > Settings > Developer settings > Personal access tokens, with the
-   *repo* scope), not your GitHub password; macOS keeps it in the
-   keychain for the next times.
-
-Then, after every change: double-click `update_github.command` again (or
-run `./update_github.command "what changed"` in a Terminal). It writes
-today's date as *Last modified* at the top of this file, records every new,
-changed or deleted file in a commit (asking for a short description) and
-pushes it to GitHub.
+| `requirements.txt` | the Python packages needed |
 
 ## Starting it
 
+In a terminal, in the folder of the GUI:
+
 ```
-cd GUI
-~/anaconda3/bin/python PIV_GUI.py
-~/anaconda3/bin/python PIV_GUI.py my.pivsession.json    # reopen a session
+python PIV_GUI.py
+python PIV_GUI.py my.pivsession.json    # reopen a session
 ```
 
-The GUI needs numpy, scipy, matplotlib and a Qt binding: PySide6 (the one
-the DTS GUI uses) or PyQt5. Both are tested. Other modules are needed only
-for some files:
+## The files needed to run the GUI
 
-- `h5py`: MATLAB v7.3 `.mat` files and Save data in HDF5;
-- `netCDF4`: Save data in NetCDF;
-- `ffmpeg` (on the PATH, e.g. from Homebrew or conda), or the Python package
-  `imageio-ffmpeg` (`pip install imageio-ffmpeg`, it brings its own ffmpeg):
-  MP4 movies (Maps and Quiver > Make Movie). Without either, the movies are
-  animated GIFs.
-
-The GUI does not depend on the `Notebook` folder.
+- **A `.mat` file from the PIVlab software**, in the run folder. The
+  current version assumes **uncalibrated, validated velocities**: the
+  calibration is done in the GUI directly (Pre-processing > Calibration).
+  Tests have been performed with data obtained from the MATLAB
+  post-processing available at
+  <https://github.com/jeromeNoir/PIVlab-line-command-pythonProcessing>.
+- **A log file** from the directory of the PIV session (the acquisition
+  log: camera frame rate, pulse separation). If it is not available, the
+  user provides the minimum information (pulse separation and camera
+  frame rate) when the run is loaded. This is done automatically when the
+  MATLAB post-processing routine above is used.
+- **A calibration image** (an image of a ruler or a target in the field of
+  view). If none is available, the calibration can be done by entering the
+  scaling factor by hand (Pre-processing > Calibration > *Enter the scale
+  by hand*, in m/px).
 
 ## Window
-
-The window is laid out like the DTS processing GUI.
 
 - **Menus**:
   - **File**: Load data, New session, Load session, Save session, Apply
@@ -88,7 +95,7 @@ The window is laid out like the DTS processing GUI.
   screen. Choosing an entry opens that step's parameters on the left and
   brings its figures forward.
 - **Left**: the parameters of the current step.
-- **Bottom**: the **log** (as in the DTS GUI), below the three panels;
+- **Bottom**: the **log**, below the three panels;
   drag the handle above it to resize it.
   - Each line starts with the time. It records the start (Python, Qt
     binding, numpy, matplotlib, missing modules), each Load (run,
@@ -109,7 +116,7 @@ The window is laid out like the DTS processing GUI.
   are kept (px, px/frame), once, for every step; the calibration factors
   are applied when the data are used (see *Adding a step*).
 - **View > Show all variables**: a window listing the variables kept in
-  memory, as in the DTS GUI, **grouped by step** like File > Save
+  memory, **grouped by step** like File > Save
   variables (see *Save variables* for the names): each with a
   description, its format, its size and its memory; dictionaries open to
   their entries, and the entries have their own short description.
@@ -121,7 +128,7 @@ The window is laid out like the DTS processing GUI.
   content).
 - **Centre**: the ticked figures, as tabs, each with the matplotlib toolbar
   (zoom, pan, cursor readout, save image). Closing a tab unticks the figure.
-- **Resizing**: the central area has no minimum size (as in the DTS GUI).
+- **Resizing**: the central area has no minimum size.
   Drag the handle on its left or on its right to narrow or widen it. A
   figure keeps its own size (about 75 px per inch of the matplotlib
   figure): when the area is smaller than the figure, scroll bars appear,
@@ -139,7 +146,7 @@ The window is laid out like the DTS processing GUI.
       is already in one. The separate window repeats the menus at its top;
       closing it brings the figure back to the centre.
     - **Save data...**: the data of the figure, in the format you choose
-      (npz, NetCDF, HDF5, txt, csv, MATLAB), as in the DTS GUI. For the
+      (npz, NetCDF, HDF5, txt, csv, MATLAB). For the
       Maps and Quiver figure this is the grid x, z, the field shown (u, v,
       |u|), the divergence, vorticity and kinetic energy, the vector field,
       the ROI, the mask, the frame and its time, the time base and the
@@ -208,8 +215,7 @@ sessions. The other menu entries open an empty panel.
    log, asking for them when they are missing: see *Files of a run*), then
    reads the run in the background, so the window stays responsive. It
    then creates the run's **post-processing folder**
-   `<run>/PostProcessing` if it does not exist (the folder the notebooks
-   use), builds the run information table and **saves it in
+   `<run>/PostProcessing` if it does not exist, builds the run information table and **saves it in
    `<run>/run_information.json`**. **Load data only loads**: no figure is
    drawn (the maps are in **Processing > Maps and Quiver**). The entry
    below appears in the figure area, listed under *Load data* on the
@@ -286,13 +292,11 @@ are used.
 
 They are carried over when a step loads the run again (calibration, time
 base) and kept in a saved session; View > Show all variables lists them
-(*parameters*). The `param_GUI*.json` files of older versions are no
-longer read or written (a session saved with one still loads it).
+(*parameters*). There is no parameter file.
 
 The `.mat` reader accepts classic MATLAB files and v7.3/HDF5 files, with the
 velocity stored either as 3-D arrays or as cell arrays (one frame per cell).
-The axes follow the notebooks' convention: x to the right, z upward, V
-positive upward.
+The axes: x to the right, z upward, V positive upward.
 
 ### Files of a run: missing `.mat` or log
 
@@ -327,8 +331,7 @@ The panel on the left, from top to bottom:
    and `background*.mat` files of the run folder and of the root folder,
    with the files named `*calib*` first; **Browse...** picks any other
    file. The selected image is shown in the figure **Calibration image**
-   (listed under *Calibration*), in pixels and rotated by `ROTATE`, as in
-   `Calibration_PIV.py`. A 90° rotation keeps the pixel distances.
+   (listed under *Calibration*), in pixels and rotated by `ROTATE`. A 90° rotation keeps the pixel distances.
    Opening the Calibration step shows the selected image if it is not
    shown yet. **Choosing an image** (list or Browse...) updates the run
    information at once (*Calibration*: `CALIB_IMAGE`), and -- as for
@@ -340,7 +343,7 @@ The panel on the left, from top to bottom:
    image figure at once** -- the segment drawn turns with the image, so
    it stays on the same features and keeps its length -- and loads the
    run again rotated
-   (the grid and the velocity turned, as the notebooks' `rotate_fields`).
+   (the grid and the velocity components turned).
    It is shown and updated in the run information (*Space*: ROTATE;
    *Calibration*: rotation) and kept in the calibration file (Save), so
    Load calibration and Load data apply it again; without a calibration
@@ -367,8 +370,13 @@ The panel on the left, from top to bottom:
    - **Segment length**: the length of the segment in px, with its two
      ends. It is updated while you drag.
    - **Length in mm**: the real length of the segment, which you type.
-   - **Scale**: the resulting XSCALE = YSCALE in m/px (and px/mm), updated
-     as you draw or type.
+   - **Enter the scale by hand** (tick box) and **Scale entered** (m/px):
+     without a calibration image, type the scaling factor (the same along
+     x and z) instead of drawing a segment; it is kept in the calibration
+     file (Save) and applied again by Load calibration / Load data.
+   - **Scale**: the resulting XSCALE = YSCALE in m/px (and px/mm) -- from
+     the segment, or the scale entered by hand --, updated as you draw or
+     type.
    - **Apply**: computes the scaling and loads the run again with it (m,
      m/s, s). It is kept in memory only -- **nothing is written in a
      parameter file** (there is none any more); **Save** keeps it in a
@@ -1141,7 +1149,7 @@ written in the batch log.
 
 ## Save variables (File > Save variables)
 
-As Advanced > Save variables of the DTS GUI: a window listing all the
+A window listing all the
 variables, grouped by step in the menu order, with their description,
 format, size and memory (the steps start collapsed; a step not run yet
 shows "nothing yet"). The names say what the variable holds (and its
@@ -1179,7 +1187,7 @@ unit when it matters):
   list: the number of variables and entries ticked.
 - **Save...** asks the file name, the folder and the format: **npz,
   NetCDF, HDF5, txt, MATLAB** (gui_export, the same writer as the
-  DTS GUI and as Save data of the figures; **CSV is not offered** for the
+  Save data of the figures; **CSV is not offered** for the
   variables -- a `.csv` name is saved as npz). Text writes one file per
   table plus an index file. Proposed: `<run>_variables` in the folder
   of the last save, or `<run>/PostProcessing`.

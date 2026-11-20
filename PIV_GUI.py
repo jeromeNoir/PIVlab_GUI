@@ -5,7 +5,7 @@ Start it from this folder with the Anaconda interpreter:
 
     ~/anaconda3/bin/python PIV_GUI.py
 
-Window (laid out as the DTS processing GUI)
+Window
 ------
   menus      File (Load data / New session / Load session / Save session /
              Save variables),
@@ -24,7 +24,7 @@ Window (laid out as the DTS processing GUI)
 List of figures: tick = shown as a tab; click a name = bring it forward;
 double click = show it in the central panel (back from its separate
 window). Right click (list, figure or table): Focus, Open in separate
-window, Save data... (npz, NetCDF, HDF5, txt, csv, MATLAB -- the DTS GUI's
+window, Save data... (npz, NetCDF, HDF5, txt, csv, MATLAB -- the
 gui_export), Update (redraw with the current parameters).
 
 V1 implements File > Load data (one run at a time) and the sessions; the
@@ -250,7 +250,7 @@ class FigurePage(QtWidgets.QWidget, _Page):
         self._init_page(manager, step, name, data_fn, update_fn)
         self.figure = figure
         self.canvas = FigureCanvasQTAgg(figure)
-        # as in the DTS GUI: the figure never shrinks below its own size
+        # the figure never shrinks below its own size
         # (75 px per inch); when the area is smaller, scroll bars appear --
         # so the central area itself has no minimum size
         self.canvas.setMinimumSize(int(figure.get_figwidth() * 75),
@@ -617,8 +617,7 @@ class FloatWindow(QtWidgets.QMainWindow):
 
 
 class FigureManager(object):
-    """The centre (tabs) and the list of figures on the right, as in the
-    DTS GUI:
+    """The centre (tabs) and the list of figures on the right:
 
     * every figure has a tick box; ticked figures are shown as tabs in the
       centre, unticked ones are hidden (closing a tab unticks it); a step
@@ -642,7 +641,7 @@ class FigureManager(object):
         self.center = QtWidgets.QStackedWidget()
         self.center.addWidget(self.empty)
         self.center.addWidget(self.tabs)
-        # no minimum size for the figures (as in the DTS GUI): the area can
+        # no minimum size for the figures : the area can
         # be narrowed from the left and from the right; a larger figure
         # gets scroll bars
         self.center.setMinimumSize(120, 100)
@@ -881,7 +880,7 @@ class FigureManager(object):
     last_save_folder = ""
 
     def save_data(self, page):
-        """Save the data of a figure (as the DTS GUI): the user picks the
+        """Save the data of a figure : the user picks the
         file and the format (npz, NetCDF, HDF5, txt, csv, MATLAB)."""
         import gui_export
         try:
@@ -5082,6 +5081,24 @@ class CalibrationPanel(QtWidgets.QWidget):
         f.addRow("Segment length", self.len_label)
         f.addRow("", self.ends_label)
         f.addRow("Length in mm", self.mm)
+        # without a calibration image: the scale entered by hand
+        self.manual_scale_on = QtWidgets.QCheckBox("Enter the scale by hand")
+        self.manual_scale_on.setToolTip(
+            "no calibration image: type the scaling factor (m per px, the "
+            "same along x and z) instead of drawing a segment")
+        self.manual_scale = QtWidgets.QDoubleSpinBox()
+        self.manual_scale.setDecimals(9)
+        self.manual_scale.setRange(0.0, 1.0)
+        self.manual_scale.setSingleStep(1e-5)
+        self.manual_scale.setSpecialValueText("--")
+        self.manual_scale.setSuffix(" m/px")
+        self.manual_scale.setEnabled(False)
+        f.addRow(self.manual_scale_on)
+        f.addRow("Scale entered", self.manual_scale)
+        self.manual_scale_on.toggled.connect(lambda on: (
+            self.manual_scale.setEnabled(on), self._update_preview()))
+        self.manual_scale.valueChanged.connect(
+            lambda *_: self._update_preview())
         f.addRow("Scale", self.preview)
         row = QtWidgets.QHBoxLayout()
         self.apply_btn = QtWidgets.QPushButton("Apply")
@@ -5255,8 +5272,11 @@ class CalibrationPanel(QtWidgets.QWidget):
             self.show_image()
 
     def _new_scale(self):
-        """m/px from the segment and the length in mm (None if either is
-        missing)."""
+        """m/px from the segment and the length in mm -- or the scale
+        entered by hand when that box is ticked (None if missing)."""
+        if self.manual_scale_on.isChecked():
+            v = self.manual_scale.value()
+            return float("%.10g" % v) if v > 0 else None
         px = lib.segment_length(self.editor.points or [])
         mm = self.mm.value()
         if px <= 0 or mm <= 0:
@@ -5266,7 +5286,8 @@ class CalibrationPanel(QtWidgets.QWidget):
     def _update_preview(self):
         s = self._new_scale()
         if s is None:
-            self.preview.setText("-- (draw the segment and give its length)")
+            self.preview.setText("-- (draw the segment and give its length, "
+                                 "or enter the scale by hand)")
         else:
             self.preview.setText("%.6g m/px   (%.4g px/mm)"
                                  % (s, 1e-3 / s))
@@ -5567,13 +5588,18 @@ class CalibrationPanel(QtWidgets.QWidget):
                              "first")
             return
         d = self.main.data
-        pts = [[round(x, 3), round(y, 3)] for x, y in self.editor.points]
+        manual = self.manual_scale_on.isChecked()
+        pts = ([[round(x, 3), round(y, 3)] for x, y in self.editor.points]
+               if self.editor.points and not manual else None)
         changes = dict(XSCALE=float(scale), YSCALE=float(scale))
         self.scale, self.seg_m = scale, self.mm.value() * 1e-3
-        record = dict(CALIB_IMAGE=self.image.currentData(self._role),
+        record = dict(CALIB_IMAGE=None if manual
+                      else self.image.currentData(self._role),
                       CALIB_SEGMENT_PX=pts,
-                      CALIB_LENGTH_PX=round(lib.segment_length(pts), 3),
-                      CALIB_LENGTH_MM=float(self.mm.value()))
+                      CALIB_LENGTH_PX=round(lib.segment_length(pts), 3)
+                      if pts else None,
+                      CALIB_LENGTH_MM=None if manual
+                      else float(self.mm.value()))
         text = "XSCALE = YSCALE = %.6g m/px" % scale
         self._last_apply = "apply"
         self.cal_label.setText("<b>%s</b>" % text)
@@ -5646,6 +5672,9 @@ class CalibrationPanel(QtWidgets.QWidget):
         notes = []
         if rec.get("rotate_deg") is not None:
             self.set_rotation(rec["rotate_deg"])
+        hand = rec.get("scale_entered_by_hand")
+        self.manual_scale.setValue(float(hand) if hand else 0.0)
+        self.manual_scale_on.setChecked(bool(hand))
         img = rec.get("image")
         if img and os.path.isfile(img):
             if img not in self._extra:
@@ -5696,6 +5725,9 @@ class CalibrationPanel(QtWidgets.QWidget):
             "length_px": (float(lib.segment_length(pts)) if pts else None),
             "length_mm": self.mm.value() or None,
             "scale_m_per_px": self._new_scale(),
+            "scale_entered_by_hand": (self.manual_scale.value()
+                                      if self.manual_scale_on.isChecked()
+                                      else None),
             "applied_m_per_px": self.scale,
             "XSCALE": (float(d.params["XSCALE"]) if d is not None
                        and d.can_calibrate else self.scale),
@@ -7581,7 +7613,7 @@ class MaskPanel(QtWidgets.QWidget):
 
 
 # --------------------------------------------------------------------------- #
-#  Log (as in the DTS GUI): printed text and errors go to the log panel
+#  Log: printed text and errors go to the log panel
 # --------------------------------------------------------------------------- #
 class LogStream(QtCore.QObject):
     """File-like object: what is printed (any thread) is sent to the log
@@ -8233,7 +8265,7 @@ class MainWindow(QtWidgets.QMainWindow):
         split.setStretchFactor(1, 1)
         split.setStretchFactor(2, 0)
         split.setSizes([430, 880, 220])
-        # the log below (as in the DTS GUI): View > Show / hide the log
+        # the log below: View > Show / hide the log
         self.log = QtWidgets.QPlainTextEdit()
         self.log.setReadOnly(True)
         self.log.setFont(QtGui.QFontDatabase.systemFont(
@@ -8290,7 +8322,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def add_menu_toolbar(self, window):
         """The drop-down menus repeated at the top of `window` (on macOS the
-        menu bar is at the top of the screen) -- as in the DTS GUI."""
+        menu bar is at the top of the screen)."""
         tb = QtWidgets.QToolBar("Menus", window)
         tb.setMovable(False)
         tb.setFloatable(False)
@@ -8620,7 +8652,7 @@ class MainWindow(QtWidgets.QMainWindow):
                         "frequencies used.")
 
     def show_variables(self):
-        """View > Show all variables (as in the DTS GUI)."""
+        """View > Show all variables."""
         import gui_variables
         dlg = getattr(self, "_variables_dialog", None)
         if dlg is None:
@@ -8675,8 +8707,7 @@ class MainWindow(QtWidgets.QMainWindow):
         return out
 
     def show_save_variables(self):
-        """File > Save variables (as Advanced > Save variables of the DTS
-        GUI): tick the variables, then Save (file, folder, format)."""
+        """File > Save variables: tick the variables, then Save (file, folder, format)."""
         import gui_variables
 
         def folder():
