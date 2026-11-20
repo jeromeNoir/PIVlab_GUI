@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "run_folder": "FlowAroundCylinderNov2026",
+    "file_pattern": "*.tif",
+    "num_pairs": 3,
+    "results_file": "PIVlab_results_uncalibrated.mat",
+    "created": "2026-11-20T21:13:29"
+  },
+  "preprocessing": {
+    "do_bg_subtract": 0,
+    "use_bg": false,
+    "roi_inpt": [],
+    "clahe": 1,
+    "clahesize": 64,
+    "highp": 1,
+    "highpsize": 15,
+    "intenscap": 0,
+    "wienerwurst": 0,
+    "wienerwurstsize": 3,
+    "minintens": 0,
+    "maxintens": 1
+  },
+  "piv": {
+    "interrogationarea": 64,
+    "step": 32,
+    "subpixfinder": 1,
+    "mask_inpt": [],
+    "passes": 2,
+    "int2": 32,
+    "int3": 16,
+    "int4": 16,
+    "imdeform": "*linear",
+    "repeat": 0,
+    "mask_auto": 0,
+    "do_linear_correlation": 0,
+    "repeat_last_pass": 0,
+    "delta_diff_min": 0.025,
+    "limit_peak_search_area": 1
+  },
+  "postprocessing": {
+    "calu": 1,
+    "calv": 1,
+    "valid_vel": [
+      -50,
+      50,
+      -50,
+      50
+    ],
+    "do_stdev_check": 1,
+    "stdthresh": 7,
+    "do_local_median": 1,
+    "neigh_thresh": 3,
+    "paint_nan": 1
+  }
+}
